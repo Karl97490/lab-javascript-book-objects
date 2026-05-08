@@ -63,7 +63,7 @@ const booksArray = [
     author: "Tara Westover",
     details: {
       language: "English",
-      description: "Educated is an account of the struggle for self-invention."
+      description: "Educated is an account of the struggle for self-invention..."
     }
   },
   {
@@ -81,8 +81,8 @@ const booksArray = [
 
 
 // Iteration 2 | Book Details
-function getBookDetails(books) {
-  return `${books.title} - ${books.author} - ${books.pages} pages`
+function getBookDetails(book) {
+  return `${book.title} - ${book.author} - ${book.pages} pages`
 
 }
 
@@ -90,22 +90,22 @@ function getBookDetails(books) {
 
 // Iteration 3 | Delete Language
 // Your code here:
-for (book of booksArray) {
+for (const book of booksArray) {
   delete book.details.language
 }
 
-// console.log(booksArray)
+console.log(booksArray)
 
 
 
 // Iteration 4 | Estimated Reading Time
 // Your code here:
-for (book of booksArray) {
+for (const book of booksArray) {
   const time = Math.ceil((book.pages * 500) / 90)
   book.readingTime = time
 }
 
-// console.log(booksArray)
+console.log(booksArray)
 
 
 
@@ -137,17 +137,17 @@ function booksByAuthor(dictionary) {
   let bookArr = [] // Create the bookArr that will contain the objects
 
   for (const author in dictionary) { // Iterate through the dictionnary obj using for in loop
-    const books = dictionary[author] // get the value of the obj properties - return an array
+    const booksAuthor = dictionary[author] // get the value of the obj properties - return an array
 
-    for (book of books) { // Iterate through this array that contains the books group by author
-      const bookObj = {} // Create an empty object bookObj that will contain the informations of each book
-      bookObj["title"] = book[0] // Since the array books contain nested arrays - get the value of thoses nested arrays - the title of the book
-      bookObj["pages"] = book[1] // The number of pages of the book
-      bookObj["author"] = author // Get the author name attached to the book - since they are group by author - get the properti name of the dictionnary obj
-      bookArr.push(bookObj) // Push the new bookObj with properties title, pages and author to the bookArr
+    for (book of booksAuthor) { // Iterate through this array that contains the books group by author
+      const bookObj = { // Create an empty object bookObj that will contain the informations of each book
+        title: book[0], // Since the array books contain nested arrays - get the value of thoses nested arrays - the title of the book
+        pages: book[1], // The number of pages of the book
+        author: author // Get the author name attached to the book
+      }
+      bookArr.push(bookObj) // Push the new bookObj with properties title, pages and author to the bookArr array
 
     }
-
   }
   return bookArr // Return the bookArr array that contains books objects
 }
@@ -158,11 +158,13 @@ booksByAuthor(dictionary)
 // Bonus: Iteration 6 | Average Page Count
 function averagePageCount(bookArr) {
   // Your code here:
+  if(!bookArr.length){
+    return null
+  }
   let sumPages = 0;
   const numberOfBooks = bookArr.length
-  for (bookObj of bookArr) {
-    const bookPages = bookObj.pages
-    sumPages += bookPages
+  for (const bookObj of bookArr) {
+    sumPages += bookObj.pages
   }
   const averagePages = sumPages / numberOfBooks
   return averagePages
